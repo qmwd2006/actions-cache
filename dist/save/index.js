@@ -5469,6 +5469,7 @@ var Inputs;
     Inputs["Path"] = "path";
     Inputs["RestoreKeys"] = "restore-keys";
     Inputs["UploadChunkSize"] = "upload-chunk-size";
+    Inputs["ForceSave"] = "force-save";
 })(Inputs = exports.Inputs || (exports.Inputs = {}));
 var Outputs;
 (function (Outputs) {
@@ -47176,7 +47177,8 @@ function run() {
                 utils.logWarning(`Error retrieving key from state.`);
                 return;
             }
-            if (utils.isExactKeyMatch(primaryKey, state)) {
+            const forceSave = utils.getInputAsInt(constants_1.Inputs.ForceSave);
+            if (!forceSave && utils.isExactKeyMatch(primaryKey, state)) {
                 core.info(`Cache hit occurred on the primary key ${primaryKey}, not saving cache.`);
                 return;
             }
